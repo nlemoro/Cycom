@@ -55,9 +55,18 @@ class Controller(object):
                 for sheet in sheetnames:
                     for row in xl.getiter(sheet):
                         print row
+                        id = row[0]
+                        title = row[1]
+                        brand = row[2]
+                        url = row[3]
+                        print 'id: ' + str(id)
+                        row_list = xl.getiter(sheet)
                     else:
                         print 'else all check'
-                return render_template('import_result.html', row = row, date_import = date_import)
+                print xl.nrows(sheet)
+                print xl.ncols(sheet)
+                print xl.variables(sheet)
+                return render_template('import_result.html', row = row, date_import = date_import, sheet=sheet, col=xl.variables(sheet), id=id, title=title, brand=brand, url=url, row_list=row_list)
 
     @app.route('/uploads/<filename>')
     def uploaded_file(filename):

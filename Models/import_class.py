@@ -76,6 +76,7 @@ class readexcel(object):
         to be returned.  Calling returntupledate=True causes dates to returned
         as tuples of (Year, Month, Day, Hour, Min, Second) instead of as a
         string """
+        returnlist=True
         if sheetname not in self.__sheets__.keys():
             raise NameError, "%s is not present in %s" % (sheetname,\
                                                           self.__filename__)

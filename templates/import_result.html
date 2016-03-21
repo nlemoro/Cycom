@@ -7,16 +7,20 @@
 {% if row %}
     <TABLE BORDER="1">
           <TR>
-              {% for row in row %}
-         <TH> {{ row }} </TH>
+              {% for col in col %}
+         <TH> {{ col }} </TH>
               {% endfor %}
           </TR>
+
+              {% for row in row_list %}
           <TR>
-         <TD> {{ row }} </TD>
-         <TD> {{ row }} </TD>
-         <TD> {{ row }} </TD>
-         <TD> {{ row }} </TD>
+         <TD> {{ id }} </TD>
+         <TD> {{ title }} </TD>
+         <TD> {{ brand }} </TD>
+         <TD> {{ url }} </TD>
           </TR>
+              {% endfor %}
+
         </TABLE>
 {% endif %}
 {% endblock %}
