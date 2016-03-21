@@ -1,0 +1,23 @@
+{% extends 'squelette.html' %}
+
+{% block title %}Import Excel{% endblock %}
+
+{% block main %}
+<h1>Choisissez un fichier à Uploader :</h1>
+<form action="import_xls" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+                                <label class="label">Fichier</label>
+                                <div class="col-md-8">
+                                    <input type="file" id="file" name="file" required="true"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="label" >Date de l'import</label>
+                                <div class="col-md-8">
+                                    <input name="date-import" id='date-import' type='date' value="" class='form-control'/>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btsub" style="text-align: center; margin: 0 50%;">Importer</button>
+</form>
+{% endblock %}

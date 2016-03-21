@@ -1,0 +1,22 @@
+{% extends 'squelette.html' %}
+
+{% block title %}Fichier excel importé :{% endblock %}
+
+{% block main %}
+<h1>Import du {{ date_import}} :</h1>
+{% if row %}
+    <TABLE BORDER="1">
+          <TR>
+              {% for row in row %}
+         <TH> {{ row }} </TH>
+              {% endfor %}
+          </TR>
+          <TR>
+         <TD> {{ row }} </TD>
+         <TD> {{ row }} </TD>
+         <TD> {{ row }} </TD>
+         <TD> {{ row }} </TD>
+          </TR>
+        </TABLE>
+{% endif %}
+{% endblock %}

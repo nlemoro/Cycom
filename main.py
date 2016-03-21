@@ -41,7 +41,7 @@ class Controller(object):
 
     @app.route('/cycom/new_import')
     def new_import():
-        return render_template('new_import.xml')
+        return render_template('new_import.html')
 
     @app.route('/cycom/import_xls', methods=['POST'])
     def import_xls():
@@ -53,21 +53,19 @@ class Controller(object):
                 xl = readexcel(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 sheetnames = xl.worksheets()
                 for sheet in sheetnames:
-                    print sheet
                     for row in xl.getiter(sheet):
                         print row
-                        print date_import
                     else:
                         print 'else all check'
-                return render_template('import_result.xml')
+                return render_template('import_result.html', row = row, date_import = date_import)
 
     @app.route('/uploads/<filename>')
     def uploaded_file(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
     @app.route('/cycom/import_result')
-    def import_result():
-        return render_template('import_result.xml')
+    def import_result_test(self):
+        return render_template('import_result.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
