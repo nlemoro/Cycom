@@ -4,6 +4,8 @@
 
 {% block main %}
 <h1>Import du {{ date_import}} :</h1>
+<form action="validation" method="post" enctype="multipart/form-data">
+    <div class="form-group">
 {% if row %}
     <TABLE BORDER="1">
           <TR>
@@ -22,5 +24,7 @@
               {% endfor %}
 
         </TABLE>
+        </div>
+    </form>
 {% endif %}
 {% endblock %}

@@ -73,7 +73,7 @@ class Controller(object):
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
     @app.route('/cycom/import_result')
-    def import_result_test(self):
+    def validation(self):
         return render_template('import_result.html')
 
 if __name__ == '__main__':
