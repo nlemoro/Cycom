@@ -62,8 +62,13 @@
 
                                         </thead>
                                         <tbody>
+                                        <tr>
+                                                {% for item in item %}
+                                            <td>-</td>
+                                                {% endfor %}
+                                        </tr>
                                         {% for item in worksheet %}
-                                            <tr>
+                                        <tr>
                                                 {% for item in item %}
                                                     <td>
                                                         {{ item}}
