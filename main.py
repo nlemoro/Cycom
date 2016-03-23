@@ -77,39 +77,12 @@ class Controller(object):
                 i += 1
             file.close()
             default_cols_list = get_col_list()
+            print matched_cols_list
+            print default_cols_list
             return render_template('import_result.html', worksheet = worksheet,
                                                         default_cols_list = default_cols_list,
                                                         matched_cols_list = matched_cols_list,
                                                         date_import = date_import, item = item, nbr_col = len(worksheet))
-
-    @app.route('/cycom/import_xls', methods=['POST'])
-    def import_xls():
-            date_import = request.form['date-import']
-            file = request.files['file']
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                xl = readexcel(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                sheetnames = xl.worksheets()
-                worksheet = []
-                i = 0
-                for sheet in sheetnames:
-                    for row in xl.getiter(sheet):
-                        print row
-                        id = row[0]
-                        title = row[1]
-                        brand = row[2]
-                        url = row[3]
-                        print i
-                        print id
-                        worksheet.append(row)
-                        i += 1
-                    else:
-                        print 'else all check'
-                print xl.nrows(sheet)
-                print xl.ncols(sheet)
-                print xl.variables(sheet)
-                return render_template('import_result.html', worksheet = worksheet, i = i, row = row, date_import = date_import, sheet=sheet, col=xl.variables(sheet), id=id, title=title, brand=brand, url=url)
 
     @app.route('/uploads/<filename>')
     def uploaded_file(filename):

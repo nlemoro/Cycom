@@ -45,12 +45,11 @@
                                     <TABLE BORDER="1">
                                        <thead>
                                             <tr>
-                                                <t t-if="len(worksheet) != 0">
                                         {% for item in worksheet[0] %}
-                                                    <th t-foreach="len(worksheet[0])" t-as="i" style="min-width: 150px;">
+                                                    <th style="min-width: 150px;">
                                                         <select class="form-control menu-select">
-                                                            <option t-foreach="default_cols_list" t-as="item">
-                                                                <t t-esc="item.name" />
+                                                            <option>
+                                                                {{ item }}
                                                             </option>
                                                         </select>
                                                         <a href="#" class="cancel_import" style="float: right; position: relative;

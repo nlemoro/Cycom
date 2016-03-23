@@ -32,19 +32,19 @@ class Ressource:
 
 def get_col_list():
     return [
-        Ressource("id", "id"),
-        Ressource("title", "title"),
-        Ressource("brand", "brand"),
-        Ressource("url", "url"),
+        Ressource("id", "id", "Produit", True, "SKU"),
+        Ressource("title", "title", "Produit", True, "Titre"),
+        Ressource("brand", "brand", "Marque", True, "Nom"),
+        Ressource("url", "producturl", "Product", True, "url"),
         Ressource("Non reconnu", "inconnu")
     ]
 
 def match_col_title(first_line):
     ressource = {}
-    ressource["id"] = Ressource("id", "id")
-    ressource["title"] = Ressource("title", "title")
-    ressource["brand"] = Ressource("brand", "brand")
-    ressource["url"] = Ressource("url", "url"),
+    ressource["id"] = Ressource("id", "id", "Produit", True, "SKU")
+    ressource["title"] = Ressource("title", "title", "Produit", True, "Titre")
+    ressource["brand"] = Ressource("brand", "brand", "Marque", True, "Nom")
+    ressource["url"] = Ressource("url", "producturl", "Product", True, "url"),
     ressource["inconnu"] = Ressource("Non reconnu", "inconnu")
 
     col_list_matched = []
