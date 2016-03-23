@@ -1,10 +1,13 @@
 # -*- coding:utf-8 -*-
+import json
 
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import os
 from Models.import_class import readexcel
 from werkzeug.wsgi import LimitedStream
 from werkzeug import secure_filename
+from services.parsing_file import ParsingFile
+from ressourses.ressources import match_col_title, get_col_list
 
 
 class StreamConsumingMiddleware(object):
@@ -43,6 +46,42 @@ class Controller(object):
     def new_import():
         return render_template('new_import.html')
 
+    @app.route('/cycom/test_recup_wds', methods=['POST'])
+    def test_recup_wds():
+            date_import = request.form['date_import']
+            if 'file' in request.files:
+                file = request.files['file']
+                filename = secure_filename(file.filename)
+            else:
+                print 'else all check'
+                return redirect('/cycom/new_import')
+            if not file or file is None:
+                print 'not file'
+                return redirect('/cycom/new_import')
+
+            parsingFile = ParsingFile(file)
+            if len(parsingFile) == 0:
+                file.close()
+                print 'len == 0'
+                return redirect('/cycom/new_import')
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            worksheet = []
+
+            i = 0
+            matched_cols_list = None
+            for item in parsingFile:
+                if i == 0:
+                    matched_cols_list = match_col_title(item)
+                if i < 11:
+                    worksheet.append(item)
+                i += 1
+            file.close()
+            default_cols_list = get_col_list()
+            return render_template('import_result.html', worksheet = worksheet,
+                                                        default_cols_list = default_cols_list,
+                                                        matched_cols_list = matched_cols_list,
+                                                        date_import = date_import, item = item, nbr_col = len(worksheet))
+
     @app.route('/cycom/import_xls', methods=['POST'])
     def import_xls():
             date_import = request.form['date-import']
@@ -52,6 +91,8 @@ class Controller(object):
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 xl = readexcel(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 sheetnames = xl.worksheets()
+                worksheet = []
+                i = 0
                 for sheet in sheetnames:
                     for row in xl.getiter(sheet):
                         print row
@@ -59,14 +100,16 @@ class Controller(object):
                         title = row[1]
                         brand = row[2]
                         url = row[3]
-                        print 'id: ' + str(id)
-                        row_list = xl.getiter(sheet)
+                        print i
+                        print id
+                        worksheet.append(row)
+                        i += 1
                     else:
                         print 'else all check'
                 print xl.nrows(sheet)
                 print xl.ncols(sheet)
                 print xl.variables(sheet)
-                return render_template('import_result.html', row = row, date_import = date_import, sheet=sheet, col=xl.variables(sheet), id=id, title=title, brand=brand, url=url, row_list=row_list)
+                return render_template('import_result.html', worksheet = worksheet, i = i, row = row, date_import = date_import, sheet=sheet, col=xl.variables(sheet), id=id, title=title, brand=brand, url=url)
 
     @app.route('/uploads/<filename>')
     def uploaded_file(filename):

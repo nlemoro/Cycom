@@ -1,29 +1,88 @@
 {% extends 'squelette.html' %}
 
 {% block title %}Fichier excel importé :{% endblock %}
+{% block script %}language="JavaScript" type="text/javascript" src="/static/js/import_result.js"{% endblock %}
 
 {% block main %}
 <h1>Import du {{ date_import}} :</h1>
 <form action="validation" method="post" enctype="multipart/form-data">
     <div class="form-group">
-{% if row %}
-    <TABLE BORDER="1">
-          <TR>
-              {% for col in col %}
-         <TH> {{ col }} </TH>
-              {% endfor %}
-          </TR>
+{% if item %}
+                                <ul class="hidden">
+                <t t-foreach="patterns" t-as="pattern">
+                    <li>
+                        <span  class="patternName"><t t-esc="pattern.name" /></span>
+                        <span class="patternList"><t t-esc="pattern.pattern_list" /></span>
+                        <select id="matched_cols_list" class="form-control hidden">
+                             <option t-foreach="matched_cols_list" t-as="item">
+                                 <t t-esc="item.name"/>
+                             </option>
+                        </select>
+                    </li>
+                </t>
+            </ul>
+            <div id="wrapper">
+                <div class="content" style="margin-top: 5px">
+                    <div class="container" style="width: 100%">
+                        <div class="row">
+                            <div class="col-md-offset-1 col-md-9 layout-main">
+                                <h2 id="bwtitle"></h2>
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <a class="btn btn-default" href="/cycom/new_import">&lt;&lt; Annuler l'import</a>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-1">
+                            <form enctype="multipart/form-data" action="validation" method="post">
+                                <input type="text" name="table" class="hide" id="tableToSend" />
+                                <input type="text" name="file_name" class="hide" id="file_name" t-att-value="file_name"/>
+                                <button type="submit" class="btn btn-success">Valider les modifications</button>
+                                <button type="button" class="btn btn-info" id="clear_select">Réinitialiser Sélection</button>
+                                <a href="/cycom/offer-list" id="submit_link" class="hidden"></a>
+                            </form>
+                            <div class="layout-main">
+                                <div class="portlet" style="padding-top: 10px;">
+                                    <TABLE BORDER="1">
+                                       <thead>
+                                            <tr>
+                                                <t t-if="len(worksheet) != 0">
+                                        {% for item in worksheet[0] %}
+                                                    <th t-foreach="len(worksheet[0])" t-as="i" style="min-width: 150px;">
+                                                        <select class="form-control menu-select">
+                                                            <option t-foreach="default_cols_list" t-as="item">
+                                                                <t t-esc="item.name" />
+                                                            </option>
+                                                        </select>
+                                                        <a href="#" class="cancel_import" style="float: right; position: relative;
+                                                                                    bottom: 25px; right: 17px; height: 0px;">x</a>
+                                                    </th>
+                                                {% endfor %}
+                                                </t>
+                                            </tr>
 
-              {% for row in row_list %}
-          <TR>
-         <TD> {{ id }} </TD>
-         <TD> {{ title }} </TD>
-         <TD> {{ brand }} </TD>
-         <TD> {{ url }} </TD>
-          </TR>
-              {% endfor %}
+                                        </thead>
+                                        <tbody>
+                                        {% for item in worksheet %}
+                                            <tr>
+                                                {% for item in item %}
+                                                    <td>
+                                                        {{ item}}
+                                                        </td>
+                                                {% endfor %}
+                                            </tr>
 
-        </TABLE>
+                                                {% endfor %}
+                                        </tbody>
+                                    </TABLE>
+ </div>
+                                </div>
+                                <!-- /.portlet -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 {% endif %}

@@ -1,10 +1,11 @@
 {% extends 'squelette.html' %}
 
 {% block title %}Import Excel{% endblock %}
+{% block script %}language="JavaScript" type="text/javascript" src="/static/js/new_import.js"{% endblock %}
 
 {% block main %}
 <h1>Choisissez un fichier à Uploader :</h1>
-<form action="import_xls" method="post" enctype="multipart/form-data">
+<form action="test_recup_wds" method="post" enctype="multipart/form-data">
     <div class="form-group">
                                 <label class="label">Fichier</label>
                                 <div class="col-md-8">
@@ -14,10 +15,10 @@
                             <div class="form-group">
                                 <label class="label" >Date de l'import</label>
                                 <div class="col-md-8">
-                                    <input name="date-import" id='date-import' type='date' value="" class='form-control'/>
+                                    <input name="date_import" id='date_import' type='date' value="" class='form-control'/>
                                 </div>
                             </div>
 
-                            <button type="submit" class="btsub" style="text-align: center; margin: 0 50%;">Importer</button>
+                            <button type="submit" class="btn btn-default" style="text-align: center; margin: 0 50%;">Importer</button>
 </form>
 {% endblock %}
