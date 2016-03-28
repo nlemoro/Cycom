@@ -32,19 +32,42 @@ class Ressource:
 
 def get_col_list():
     return [
-        Ressource("id", "id", "Produit", True, "SKU"),
-        Ressource("title", "title", "Produit", True, "Titre"),
-        Ressource("brand", "brand", "Marque", True, "Nom"),
-        Ressource("url", "producturl", "Product", True, "url"),
-        Ressource("Non reconnu", "inconnu")
+        Ressource("Référence", "reference"),
+        Ressource("Vin", "vin", "Wine", True, "Name"),
+        Ressource("Appelation", "appelation", "Appelation", True, "Name"),
+        Ressource("Classement", "classement"),
+        Ressource("Couleur", "couleur", "Color", True, "Name"),
+        Ressource("Millesime", "millesime", "Vintage", True, "Year"),
+        Ressource("Prix", "prix", "", True),
+        Ressource("Quantité", "quantite", "", True),
+        Ressource("Format", "format", "", True),
+        Ressource("Commentaire", "commentaire", "", True),
+        Ressource("Conditionnement", "conditionnement", "", True),
+        Ressource("Type de Conditionnement", "type_conditionnement", "PackageType", True, "Name"),
+        Ressource("Régie", "regie", "", True),
+        Ressource("Type", "type"),
+        Ressource("Devise", "devise"),
+        Ressource("Région", "region")
     ]
 
 def match_col_title(first_line):
     ressource = {}
-    ressource["id"] = Ressource("id", "id", "Produit", True, "SKU")
-    ressource["title"] = Ressource("title", "title", "Produit", True, "Titre")
-    ressource["brand"] = Ressource("brand", "brand", "Marque", True, "Nom")
-    ressource["url"] = Ressource("url", "producturl", "Product", True, "url"),
+    ressource["reference"] = Ressource("Référence", "reference")
+    ressource["vin"] = Ressource("Vin", "vin", "Wine", True, "Name")
+    ressource["appellation"] = Ressource("Appelation", "appelation", "Appelation", True, "Name")
+    ressource["classement"] = Ressource("Classement", "classement")
+    ressource["couleur"] = Ressource("Couleur", "couleur", "Color", True, "Name")
+    ressource["millesime"] = Ressource("Millesime", "millesime", "Vintage", True, "Year")
+    ressource["prix"] = Ressource("Prix", "prix", "", True)
+    ressource["quantite"] = Ressource("Quantité", "quantite", "", True)
+    ressource["format"] = Ressource("Format", "format", "", True)
+    ressource["commentaire"] = Ressource("Commentaire", "commentaire", "", True)
+    ressource["conditionnement"] = Ressource("Conditionnement", "conditionnement", "", True)
+    ressource["type de conditionnement"] = Ressource("Type de Conditionnement", "type_conditionnement", "PackageType", True, "Name")
+    ressource["regie"] = Ressource("Régie", "regie", "", True)
+    ressource["type"] = Ressource("Type", "type")
+    ressource["devise"] = Ressource("Devise", "devise")
+    ressource["region"] = Ressource("Région", "region")
     ressource["inconnu"] = Ressource("Non reconnu", "inconnu")
 
     col_list_matched = []

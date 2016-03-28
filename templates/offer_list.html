@@ -1,0 +1,154 @@
+{% extends 'squelette.html' %}
+
+{% block title %}Import Excel{% endblock %}
+{% block script %}language="JavaScript" type="text/javascript" src="/static/js/offer_list.js"{% endblock %}
+
+{% block main %}
+<div id="wrapper">
+                <div class="content" style="margin-top: 5px">
+                    <div class="container" style="width: 100%">
+                        <div class="row">
+                            <div class="col-md-offset-1 col-md-4 layout-main">
+                                <h2>Liste des fichiers importés</h2>
+                            </div>
+                            <div class="text-right">
+                                <a class="btn btn-info" id="_synonyme-manager" href="/bigwine/synonyme">Gestion synonyme</a>
+                                <a class="btn btn-info" id="_new-wine" href="/bigwine/new-price">Nouveau tarif</a>
+                                <a class="btn btn-info" id="_new-price" href="/bigwine/new-wine">Nouveau vin</a>
+                                <a class="btn btn-info" id="_new-import" href="/cycom/new_import">Importer</a>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-10 layout-main">
+                                    <div role="tabpanel">
+
+                                        <!-- Nav tabs -->
+                                        <ul id="nav-tabs" class="nav nav-tabs" role="tablist">
+                                            <li role="presentation" class="active">
+                                                <a href="#to-process" name="to_process"
+                                                   aria-controls="to-process-offers" role="tab" data-toggle="tab">A
+                                                    traiter
+                                                </a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a href="#published" name="published" aria-controls="published-offers"
+                                                   role="tab" data-toggle="tab">Offres publiées
+                                                </a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a href="#disabled" name="disabled" aria-controls="disabled-offers"
+                                                   role="tab" data-toggle="tab">Historique
+                                                </a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a href="#all" name="all" aria-controls="all-offers" role="tab"
+                                                   data-toggle="tab">Toutes
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active">
+                                                <nav>
+                                                    <h5 style="display: inline;">Page :</h5>
+                                                    <ul class="pagination" style="margin: 0px 0; vertical-align: middle;"></ul>
+                                                </nav>
+                                                <div class="portlet" style="padding-top: 10px;">
+                                                    <table class="table table-bordered table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:5%;">État</th>
+                                                                <th style="width:2.5%;">Fichier</th>
+                                                                <th style="width:15%;">Date d'import</th>
+                                                                <th style="width:15%;">Fichier original</th>
+                                                                <th style="width:2.5%;">Lignes OK</th>
+                                                                <th style="width:2.5%;">Lignes KO</th>
+                                                                <th style="width:10%;">Progression</th>
+                                                                <th style="width:5%;">Désativer</th>
+                                                                <th style="width:5%;">Supprimer</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="loadedfiles">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <nav>
+                                                    <h5 style="display: inline;">Page :</h5>
+                                                    <ul class="pagination" style="margin: 0px 0; vertical-align: middle;"></ul>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="remove-offer-modal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div id="remove-offer-id" class="hidden"></div>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">X</span>
+                            </button>
+                            <h4 class="modal-title">Suppression de l'offre</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Cette offre sera définitevement supprimée.</p>
+                            <br/>
+                            <p>Êtes-vous sûr ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default close-modal" data-dismiss="modal">Annuler
+                            </button>
+                            <button id="confirm-remove-offer" type="button" class="btn btn-primary">Supprimer l'offre
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+            <div id="publish-offer-modal" class="modal fade">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div id="publish-offer-id" class="hidden"></div>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">X</span>
+                            </button>
+                            <h4 class="modal-title">Publication de l'offre</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>La publication d'une offre désactive les anciennes offres de <b id="partner-modal"></b>.</p>
+                            <br/>
+                            <p>Êtes-vous sûr de vouloir désactiver les offres ci - dessous ?</p>
+                            <table class="table table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th style="width:5%;">Fichier originel</th>
+                                        <th style="width:27.5%;">Date d'import</th>
+                                        <th style="width:30%;">Fichiers</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="offer-list-modal">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default close-modal flush-tab" data-dismiss="modal">Annuler
+                            </button>
+                            <button id="confirm-publish-offer" type="button" class="btn btn-primary flush-tab">Publier l'offre
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+{% endblock %}

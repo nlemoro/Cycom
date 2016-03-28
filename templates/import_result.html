@@ -8,7 +8,7 @@
 <form action="validation" method="post" enctype="multipart/form-data">
     <div class="form-group">
 {% if item %}
-                                <ul class="hidden">
+            <ul class="hidden">
                 <t t-foreach="patterns" t-as="pattern">
                     <li>
                         <span  class="patternName"><t t-esc="pattern.name" /></span>
@@ -38,19 +38,22 @@
                                 <input type="text" name="file_name" class="hide" id="file_name" t-att-value="file_name"/>
                                 <button type="submit" class="btn btn-success">Valider les modifications</button>
                                 <button type="button" class="btn btn-info" id="clear_select">Réinitialiser Sélection</button>
-                                <a href="/cycom/offer-list" id="submit_link" class="hidden"></a>
+                                <a href="/cycom/offer_list" id="submit_link" class="hidden"></a>
                             </form>
                             <div class="layout-main">
                                 <div class="portlet" style="padding-top: 10px;">
-                                    <TABLE BORDER="1">
+                                    <TABLE  class="table table-bordered" id="loadedfiles">
                                        <thead>
                                             <tr>
                                         {% for item in worksheet[0] %}
                                                     <th style="min-width: 150px;">
                                                         <select class="form-control menu-select">
+                                                            {% for item in worksheet[0] %}
                                                             <option>
                                                                 {{ item }}
                                                             </option>
+                                                {% endfor %}
+
                                                         </select>
                                                         <a href="#" class="cancel_import" style="float: right; position: relative;
                                                                                     bottom: 25px; right: 17px; height: 0px;">x</a>
@@ -70,7 +73,7 @@
                                         <tr>
                                                 {% for item in item %}
                                                     <td>
-                                                        {{ item}}
+                                                        {{ item }}
                                                         </td>
                                                 {% endfor %}
                                             </tr>
